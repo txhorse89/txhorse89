@@ -1,5 +1,5 @@
 ---
-title: "First time figuring this out"
+title: "Testing out Quarto using various graphics"
 author: "Heather Terada"
 format: 
   html:
@@ -9,15 +9,22 @@ format:
 ---
 
 ```{r}
-## Wildfires in California
+#| label: load-packages
+#| include: false
+
 library(tidyverse)
 library(ggdark)
 library(lubridate)
-wildfires<-readr::read_csv("https://raw.githubusercontent.com/BuzzFeedNews/2018-07-wildfire-trends/master/data/calfire_frap.csv") %>%
+```
 
-  mutate(plot_date = as.Date(format(alarm_date,"2017-%m-%d")))
+## Recreating wildfire graphic from Data Viz class
+
+I wanted to test out how the graphics appear in the quarto document
+
+```{r}
+wildfires<-readr::read_csv("https://raw.githubusercontent.com/BuzzFeedNews/2018-07-wildfire-trends/master/data/calfire_frap.csv") %>%
+mutate(plot_date = as.Date(format(alarm_date,"2017-%m-%d")))
 str(wildfires)
-# Recreating the original California wildfires
 ggplot(wildfires, aes(plot_date ,year_)) +
   geom_point(aes(size=gis_acres, alpha = 0.3), color = "orange") +
   dark_theme_gray() +

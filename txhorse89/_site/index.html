@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Heather Terada">
 
-<title>txhorse89 - First time figuring this out</title>
+<title>txhorse89 - Testing out Quarto using various graphics</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -161,20 +162,32 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#recreating-wildfire-graphic-from-data-viz-class" id="toc-recreating-wildfire-graphic-from-data-viz-class" class="nav-link active" data-scroll-target="#recreating-wildfire-graphic-from-data-viz-class">Recreating wildfire graphic from Data Viz class</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">First time figuring this out</h1>
+<h1 class="title">Testing out Quarto using various graphics</h1>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Heather Terada </p>
+          </div>
+  </div>
     
   
     
@@ -183,16 +196,78 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 </header>
 
-<p>This is a Quarto website.</p>
-<p>To learn more about Quarto websites visit <a href="https://quarto.org/docs/websites" class="uri">https://quarto.org/docs/websites</a>.</p>
+<section id="recreating-wildfire-graphic-from-data-viz-class" class="level2">
+<h2 class="anchored" data-anchor-id="recreating-wildfire-graphic-from-data-viz-class">Recreating wildfire graphic from Data Viz class</h2>
+<p>I wanted to test out how the graphics appear in the quarto document</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">+</span> <span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>wildfires<span class="ot">&lt;-</span>readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="st">"https://raw.githubusercontent.com/BuzzFeedNews/2018-07-wildfire-trends/master/data/calfire_frap.csv"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mutate</span>(<span class="at">plot_date =</span> <span class="fu">as.Date</span>(<span class="fu">format</span>(alarm_date,<span class="st">"2017-%m-%d"</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>Rows: 14847 Columns: 18
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: ","
+chr  (7): state, agency, unit_id, fire_name, inc_num, comments, fire_num
+dbl  (9): objectid, year_, cause, report_ac, gis_acres, c_method, objective,...
+date (2): alarm_date, cont_date
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(wildfires)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 2</code></pre>
+<pre><code>tibble [14,847 × 19] (S3: tbl_df/tbl/data.frame)
+ $ objectid    : num [1:14847] 1 2 3 4 5 6 7 8 9 10 ...
+ $ year_       : num [1:14847] 2007 2007 2007 2007 2007 ...
+ $ state       : chr [1:14847] "CA" "CA" "CA" "CA" ...
+ $ agency      : chr [1:14847] "CCO" "CCO" "USF" "CCO" ...
+ $ unit_id     : chr [1:14847] "LAC" "LAC" "ANF" "LAC" ...
+ $ fire_name   : chr [1:14847] "OCTOBER" "MAGIC" "RANCH" "EMMA" ...
+ $ inc_num     : chr [1:14847] "246393" "233077" "166" "201384" ...
+ $ alarm_date  : Date[1:14847], format: "2007-10-21" "2007-10-22" ...
+ $ cont_date   : Date[1:14847], format: "2007-10-23" "2007-10-25" ...
+ $ cause       : num [1:14847] 14 14 2 14 14 14 14 14 14 14 ...
+ $ comments    : chr [1:14847] NA NA NA NA ...
+ $ report_ac   : num [1:14847] NA NA 54716 NA NA ...
+ $ gis_acres   : num [1:14847] 25.7 2824.9 58410.3 172.2 4708 ...
+ $ c_method    : num [1:14847] 8 8 7 8 8 8 8 8 8 8 ...
+ $ objective   : num [1:14847] 1 1 1 1 1 1 1 1 1 1 ...
+ $ fire_num    : chr [1:14847] "233414" "233077" "166" "201384" ...
+ $ shape_length: num [1:14847] 1902 20408 169151 6118 22907 ...
+ $ shape_area  : num [1:14847] 1.04e+05 1.14e+07 2.36e+08 6.97e+05 1.91e+07 ...
+ $ plot_date   : Date[1:14847], format: "2017-10-21" "2017-10-22" ...</code></pre>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(wildfires, <span class="fu">aes</span>(plot_date ,year_)) <span class="sc">+</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">size=</span>gis_acres, <span class="at">alpha =</span> <span class="fl">0.3</span>), <span class="at">color =</span> <span class="st">"orange"</span>) <span class="sc">+</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dark_theme_gray</span>() <span class="sc">+</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position=</span><span class="st">"none"</span>) <span class="sc">+</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_reverse</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">2010</span>,<span class="dv">1950</span>))<span class="sc">+</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">""</span>, <span class="at">x =</span> <span class="st">""</span>) <span class="sc">+</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_date</span>(<span class="at">date_breaks=</span><span class="st">"1 month"</span>, </span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>               <span class="at">date_labels=</span><span class="fu">c</span>(<span class="st">"Dec"</span>,<span class="st">"Jan"</span>,<span class="st">"Feb"</span>,<span class="st">"Mar"</span>, <span class="st">"Apr"</span>,<span class="st">"May"</span>, <span class="st">"Jun"</span>,<span class="st">"Jul"</span>,</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>                             <span class="st">"Aug"</span>,<span class="st">"Sep"</span>,<span class="st">"Oct"</span>,<span class="st">"Nov"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>Inverted geom defaults of fill and color/colour.
+To change them back, use invert_geom_defaults().</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 4087 rows containing missing values (`geom_point()`).</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="768"></p>
 </div>
 </div>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
