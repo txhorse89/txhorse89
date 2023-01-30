@@ -1,11 +1,30 @@
 ---
 title: "First time figuring this out"
+author: "Heather Terada"
+format: 
+  html:
+    fig-width: 8
+    fig-height: 4
+    code-fold: true
 ---
 
-This is a Quarto website.
-
-To learn more about Quarto websites visit <https://quarto.org/docs/websites>.
-
 ```{r}
-1 + 1
+## Wildfires in California
+library(tidyverse)
+library(ggdark)
+library(lubridate)
+wildfires<-readr::read_csv("https://raw.githubusercontent.com/BuzzFeedNews/2018-07-wildfire-trends/master/data/calfire_frap.csv") %>%
+
+  mutate(plot_date = as.Date(format(alarm_date,"2017-%m-%d")))
+str(wildfires)
+# Recreating the original California wildfires
+ggplot(wildfires, aes(plot_date ,year_)) +
+  geom_point(aes(size=gis_acres, alpha = 0.3), color = "orange") +
+  dark_theme_gray() +
+  theme(legend.position="none") +
+  scale_y_reverse(limits = c(2010,1950))+
+  labs(y = "", x = "") +
+  scale_x_date(date_breaks="1 month", 
+               date_labels=c("Dec","Jan","Feb","Mar", "Apr","May", "Jun","Jul",
+                             "Aug","Sep","Oct","Nov"))
 ```
